@@ -4,13 +4,13 @@ export async function GET() {
   try {
     const apiKey = process.env.GOOGLE_API_KEY
 
-    // Check if API key exists
+    //check if API key exists
     const isConfigured = !!apiKey && apiKey.trim() !== ""
 
-    // For security, we'll only return a masked version of the key
+    //for security, we'll only return a masked version of the key
     let maskedKey = ""
     if (isConfigured && apiKey) {
-      // Show only the first 4 and last 4 characters
+      //show only the first 4 and last 4 characters
       maskedKey = apiKey.length > 8 ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : "****"
     }
 

@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { FileCode2, Download, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DiagramCustomization } from "@/components/diagram-customization"
+import { DiagramCustomization } from "@/components/diagrams/diagram-customization"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { DiagramShare } from "@/components/diagram-share"
+import { DiagramShare } from "@/components/diagrams/diagram-share"
 import { D3Flowchart } from "@/components/d3-flowchart-fixed"
 
 interface DiagramDisplayProps {
