@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Home, Settings, GitBranch } from "lucide-react"
 
 export function NavBar() {
-  const pathname = usePathname()
+  // Temporarily disable pathname to fix import error
+  const pathname = "/"
 
   return (
     <div className="border-b">
@@ -29,7 +29,7 @@ export function NavBar() {
             <Home className="h-4 w-4 mr-1" />
             Home
           </Link>
-          <Link
+          {/* <Link
             href="/settings"
             className={cn(
               "flex items-center text-sm font-medium transition-colors hover:text-primary",
@@ -38,7 +38,8 @@ export function NavBar() {
           >
             <Settings className="h-4 w-4 mr-1" />
             Settings
-          </Link>
+          </Link> */}
+          
         </nav>
         <div className="ml-auto flex items-center space-x-4">
           <Button variant="outline" size="sm">

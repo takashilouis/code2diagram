@@ -11,7 +11,7 @@ import { JsonFlowchart } from "@/components/json-flowchart"
 import { SequenceDiagram } from "@/components/sequence-diagram"
 import { useJsonFlowchart } from "@/lib/hooks/use-json-flowchart"
 import { useIdeasToSequence } from "@/lib/hooks/use-ideas-to-sequence"
-import { Loader2, ArrowRight, AlertTriangle, AlertCircle, FileText, Code } from "lucide-react"
+import { Loader2, ArrowRight, AlertTriangle, AlertCircle, FileText, Code, Download, Image as ImageIcon } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { JsonDiagramHistory } from "@/components/json-diagram-history"
@@ -67,6 +67,122 @@ export default function Home() {
   const handleGenerateIdeasClick = () => {
     console.log("Generate sequence diagram button clicked")
     generateSequence()
+  }
+
+  // Download functions
+  const handleDownloadSVG = () => {
+    const svgElement = document.querySelector('.json-flowchart svg, .sequence-diagram svg')
+    if (svgElement) {
+      const svgData = new XMLSerializer().serializeToString(svgElement)
+      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" })
+      const svgUrl = URL.createObjectURL(svgBlob)
+      const downloadLink = document.createElement("a")
+      downloadLink.href = svgUrl
+      downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.svg`
+      document.body.appendChild(downloadLink)
+      downloadLink.click()
+      document.body.removeChild(downloadLink)
+      URL.revokeObjectURL(svgUrl)
+    }
+  }
+
+  const handleDownloadPNG = () => {
+    const svgElement = document.querySelector('.json-flowchart svg, .sequence-diagram svg')
+    if (svgElement) {
+      const canvas = document.createElement("canvas")
+      const ctx = canvas.getContext("2d")
+      if (!ctx) {
+        console.error("Could not get canvas context")
+        return
+      }
+      
+      // Get SVG dimensions and scale for higher quality
+      const svgRect = svgElement.getBoundingClientRect()
+      const scale = 2 // 2x resolution for higher quality
+      canvas.width = (svgRect.width || 800) * scale
+      canvas.height = (svgRect.height || 600) * scale
+      
+      // Scale the context for high DPI
+      ctx.scale(scale, scale)
+      
+      // Create a copy of SVG and ensure all text is white for PNG export
+      const svgClone = svgElement.cloneNode(true) as SVGElement
+      
+      // Fix sequence diagram colors intelligently
+      const fixSequenceDiagramColors = (element: Element) => {
+        // Force ALL text to be white with better visibility
+        if (element.tagName === 'text') {
+          element.setAttribute('fill', '#ffffff')
+          element.setAttribute('stroke', 'none')
+          // Make sure text is bold and visible
+          element.setAttribute('font-weight', 'bold')
+          element.setAttribute('font-size', element.getAttribute('font-size') || '12px')
+        }
+        
+        // Handle rectangles intelligently
+        if (element.tagName === 'rect') {
+          const width = parseFloat(element.getAttribute('width') || '0')
+          const height = parseFloat(element.getAttribute('height') || '0')
+          const currentFill = element.getAttribute('fill')
+          
+          // Large rectangles (background/container/alt boxes) - make them dark but semi-transparent
+          if (width > 300 || height > 200) {
+            // If it's an alt box (usually has light fill), make it dark with transparency
+            if (currentFill && (currentFill.includes('rgba') || currentFill === '#f5f5f5' || currentFill.includes('245'))) {
+              element.setAttribute('fill', 'rgba(45, 51, 59, 0.8)')  // Dark with transparency
+            } else {
+              element.setAttribute('fill', '#1a1a1a')
+            }
+            element.setAttribute('stroke', '#8b949e')
+            element.setAttribute('stroke-width', '1.5')
+          } 
+          // Small rectangles (participant boxes) should be dark with good contrast
+          else {
+            element.setAttribute('fill', '#2D333B')
+            element.setAttribute('stroke', '#8b949e')
+            element.setAttribute('stroke-width', '1.5')
+          }
+        }
+        
+        // Force any remaining light colors to white text
+        const currentFill = element.getAttribute('fill')
+        if (currentFill && 
+            element.tagName !== 'rect' && 
+            (currentFill === '#333' || currentFill === '#000' || currentFill === 'black' || 
+             (currentFill.startsWith('#') && parseInt(currentFill.slice(1), 16) < 0x808080))) {
+          element.setAttribute('fill', '#ffffff')
+        }
+        
+        // Recursively process children
+        Array.from(element.children).forEach(fixSequenceDiagramColors)
+      }
+      
+      fixSequenceDiagramColors(svgClone)
+      
+      // Fill with dark background to match the theme
+      ctx.fillStyle = "#0d1117"
+      ctx.fillRect(0, 0, svgRect.width || 800, svgRect.height || 600)
+      
+      // Convert modified SVG to image
+      const svgData = new XMLSerializer().serializeToString(svgClone)
+      const img = new window.Image()
+      
+      img.onload = () => {
+        // Draw with high quality settings
+        ctx.imageSmoothingEnabled = true
+        ctx.imageSmoothingQuality = 'high'
+        ctx.drawImage(img, 0, 0, svgRect.width || 800, svgRect.height || 600)
+        const pngUrl = canvas.toDataURL("image/png", 1.0) // Maximum quality
+        const downloadLink = document.createElement("a")
+        downloadLink.href = pngUrl
+        downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.png`
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+        document.body.removeChild(downloadLink)
+      }
+      
+      img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)))
+    }
   }
 
   return (
@@ -235,18 +351,44 @@ export default function Home() {
         <div className="w-full lg:w-[65%]">
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>
-                {activeInputTab === "code" ? "Flowchart Output" : "Sequence Diagram Output"}
-              </CardTitle>
-              <CardDescription>
-                {flowchartData 
-                  ? activeInputTab === "code" 
-                    ? "Visualized flowchart of your code" 
-                    : "Visualized sequence diagram of your ideas"
-                  : activeInputTab === "code"
-                    ? "Click 'Generate Flowchart' to create a diagram"
-                    : "Click 'Generate Sequence Diagram' to create a diagram"}
-              </CardDescription>
+              <div className="flex justify-between items-start">
+                <div>
+                  <CardTitle>
+                    {activeInputTab === "code" ? "Flowchart Output" : "Sequence Diagram Output"}
+                  </CardTitle>
+                  <CardDescription>
+                    {flowchartData 
+                      ? activeInputTab === "code" 
+                        ? "Visualized flowchart of your code" 
+                        : "Visualized sequence diagram of your ideas"
+                      : activeInputTab === "code"
+                        ? "Click 'Generate Flowchart' to create a diagram"
+                        : "Click 'Generate Sequence Diagram' to create a diagram"}
+                  </CardDescription>
+                </div>
+                {flowchartData && (
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleDownloadSVG}
+                      className="flex items-center gap-1"
+                    >
+                      <Download className="h-4 w-4" />
+                      SVG
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleDownloadPNG}
+                      className="flex items-center gap-1"
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      PNG
+                    </Button>
+                  </div>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               {warning && (

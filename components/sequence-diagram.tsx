@@ -104,14 +104,19 @@ export function SequenceDiagram({ data, theme = "dark" }: SequenceDiagramProps) 
         return textWidth
       }
 
-      // Calculate minimum width needed for each participant
-      const minWidths = sortedNodes.map(node => 
-        Math.max(120, getTextWidth(node.data.label) + 40) // minimum 120px, text width + 40px padding
-      )
+      // Calculate minimum width needed for each participant with EXTRA generous padding
+      const minWidths = sortedNodes.map(node => {
+        const textWidth = getTextWidth(node.data.label)
+        const calculatedWidth = textWidth * 1.8 + 120 // 30% safety margin + 80px padding (40px each side)
+        const minimumWidth = 180 // Increased minimum width
+        console.log(`Text: "${node.data.label}", measured: ${textWidth}, calculated: ${calculatedWidth}`)
+        return Math.max(minimumWidth, calculatedWidth)
+      })
       
       // Calculate total width needed
       const totalMinWidth = minWidths.reduce((sum, width) => sum + width, 0)
-      const availableWidth = width - (sortedNodes.length * 20) // 20px spacing between boxes
+      const boxSpacing = 30 // Increased spacing between boxes
+      const availableWidth = width - (sortedNodes.length * boxSpacing)
       
       // Scale widths proportionally if needed
       const scaleFactor = availableWidth < totalMinWidth ? availableWidth / totalMinWidth : 1
@@ -119,7 +124,7 @@ export function SequenceDiagram({ data, theme = "dark" }: SequenceDiagramProps) 
       
       // Calculate x positions
       const boxPositions = boxWidths.reduce((positions, width, index) => {
-        const prevX = index === 0 ? 0 : positions[index - 1].x + positions[index - 1].width + 20
+        const prevX = index === 0 ? 0 : positions[index - 1].x + positions[index - 1].width + boxSpacing
         positions.push({ x: prevX, width })
         return positions
       }, [] as Array<{ x: number, width: number }>)

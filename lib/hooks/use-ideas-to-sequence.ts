@@ -158,5 +158,5 @@ export function useIdeasToSequence({
 }
 
 function getDefaultIdeas() {
-  return `Create a system that collects user data from a web application, processes it through an analytics engine, stores the results in a database, and then displays insights on a dashboard. The system should also allow for data export to external systems.`
+  return `When I open an app and try to log in, I enter my username and password, which the app immediately sends to the server. The server then checks the information against its database to see if it matches. If the credentials are correct, the server confirms back to the app that the login was successful, and I am taken to my dashboard. If the credentials are wrong, the server sends back an error, and the app shows me a message asking me to try again.`
 }

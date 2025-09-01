@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, Github, Twitter, Linkedin } from "lucide-react"
+import { Heart, Github, Globe, Linkedin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Footer() {
@@ -21,7 +21,7 @@ export function Footer() {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>Made with</span>
               <Heart className="h-4 w-4 text-red-500 fill-current" />
-              <span>by developers, for developers</span>
+              <span>by Khanh, for developers</span>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" asChild>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/takashilouis"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
@@ -74,17 +74,17 @@ export function Footer() {
               </Button>
               <Button variant="ghost" size="sm" asChild>
                 <a
-                  href="https://twitter.com"
+                  href="https://khanhlouis.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Twitter"
+                  aria-label="Personal Website"
                 >
-                  <Twitter className="h-4 w-4" />
+                  <Globe className="h-4 w-4" />
                 </a>
               </Button>
               <Button variant="ghost" size="sm" asChild>
                 <a
-                  href="https://linkedin.com"
+                  href="https://linkedin.com/in/khanhlouisnguyen"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
@@ -93,15 +93,6 @@ export function Footer() {
                 </a>
               </Button>
             </div>
-          </div>
-
-          {/* Additional info */}
-          <div className="mt-4 pt-4 border-t border-border text-center">
-            <p className="text-xs text-muted-foreground">
-              Powered by Google Gemini AI • Open source and free to use • 
-              <a href="#" className="hover:text-foreground transition-colors ml-1">Privacy Policy</a> • 
-              <a href="#" className="hover:text-foreground transition-colors ml-1">Terms of Service</a>
-            </p>
           </div>
         </div>
       </div>

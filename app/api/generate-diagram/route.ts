@@ -112,8 +112,8 @@ ${code}
 
       // Extract the response text
       const responseText = result.response?.text() || ""
-      console.log("Gemini response received, length:", responseText.length)
-      console.log("First 100 chars of response:", responseText.substring(0, 100))
+      // console.log("Gemini response received, length:", responseText.length)
+      //console.log("First 100 chars of response:", responseText.substring(0, 100))
 
       // Extract just the Mermaid diagram code
       let mermaidCode = responseText

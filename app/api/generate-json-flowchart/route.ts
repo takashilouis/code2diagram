@@ -121,7 +121,7 @@ Return ONLY the JSON object, no additional text.
         jsonData = responseText.split("```")[1].split("```")[0].trim()
       }
       
-      console.log("Extracted JSON data length:", jsonData.length)
+      //console.log("Extracted JSON data length:", jsonData.length)
       
       // Parse the JSON data
       let flowchartData
