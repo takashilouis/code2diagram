@@ -87,30 +87,48 @@ export default function Home() {
 
   // Generate Mermaid diagram format
   const generateMermaidDiagram = (data: any, diagramType: string) => {
+    // Helper function to clean text for Mermaid
+    const cleanMermaidText = (text: string) => {
+      return text
+        .replace(/"/g, "'")           // Replace quotes with single quotes
+        .replace(/\[/g, "(")          // Replace square brackets
+        .replace(/\]/g, ")")
+        .replace(/\{/g, "(")          // Replace curly brackets
+        .replace(/\}/g, ")")
+        .replace(/[`]/g, "'")         // Replace backticks
+        .replace(/\n/g, " ")          // Replace newlines with spaces
+        .replace(/\s+/g, " ")         // Replace multiple spaces with single space
+        .trim()
+    }
+
     if (diagramType === "code") {
       // Flowchart Mermaid format
       let mermaidContent = "```mermaid\nflowchart TD\n"
       
-      // Add nodes with proper Mermaid syntax
+      // Add nodes with proper Mermaid syntax and quotes
       data.nodes.forEach((node: any) => {
-        const label = node.data.label.replace(/"/g, '&quot;')
+        const cleanLabel = cleanMermaidText(node.data.label)
         if (node.type === 'start' || node.type === 'end') {
-          mermaidContent += `    ${node.id}([${label}])\n`
+          mermaidContent += `    ${node.id}(["${cleanLabel}"])\n`
         } else if (node.type === 'decision') {
-          mermaidContent += `    ${node.id}{${label}}\n`
+          mermaidContent += `    ${node.id}{"${cleanLabel}"}\n`
         } else if (node.type === 'process') {
-          mermaidContent += `    ${node.id}[${label}]\n`
+          mermaidContent += `    ${node.id}["${cleanLabel}"]\n`
         } else {
-          mermaidContent += `    ${node.id}[${label}]\n`
+          mermaidContent += `    ${node.id}["${cleanLabel}"]\n`
         }
       })
       
       mermaidContent += "\n"
       
-      // Add edges
+      // Add edges with proper syntax
       data.edges.forEach((edge: any) => {
-        const label = edge.label ? `|${edge.label}|` : ""
-        mermaidContent += `    ${edge.source} -->${label} ${edge.target}\n`
+        if (edge.label) {
+          const cleanEdgeLabel = cleanMermaidText(edge.label)
+          mermaidContent += `    ${edge.source} -->|"${cleanEdgeLabel}"| ${edge.target}\n`
+        } else {
+          mermaidContent += `    ${edge.source} --> ${edge.target}\n`
+        }
       })
       
       mermaidContent += "```"
@@ -119,17 +137,18 @@ export default function Home() {
       // Sequence diagram Mermaid format
       let mermaidContent = "```mermaid\nsequenceDiagram\n"
       
-      // Add participants
+      // Add participants with clean names
       data.nodes.forEach((node: any) => {
-        mermaidContent += `    participant ${node.id} as ${node.data.label}\n`
+        const cleanLabel = cleanMermaidText(node.data.label)
+        mermaidContent += `    participant ${node.id} as "${cleanLabel}"\n`
       })
       
       mermaidContent += "\n"
       
-      // Add messages
+      // Add messages with clean labels
       data.edges.forEach((edge: any) => {
-        const label = edge.label || "message"
-        mermaidContent += `    ${edge.source}->>${edge.target}: ${label}\n`
+        const cleanLabel = edge.label ? cleanMermaidText(edge.label) : "message"
+        mermaidContent += `    ${edge.source}->>${edge.target}: ${cleanLabel}\n`
       })
       
       mermaidContent += "```"
@@ -301,9 +320,7 @@ export default function Home() {
                       handleGenerateCodeClick();
                     }}
                   >
-                    <div className="flex gap-2 flex-wrap mb-2">
-                      <LanguageSelector value={language} onChange={setLanguage} />
-                    </div>
+
                     <div className="flex-grow mb-4">
                       <CodeEditor value={code} onChange={setCode} />
                     </div>
