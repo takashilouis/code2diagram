@@ -11,7 +11,7 @@ import { JsonFlowchart } from "@/components/json-flowchart"
 import { SequenceDiagram } from "@/components/sequence-diagram"
 import { useJsonFlowchart } from "@/lib/hooks/use-json-flowchart"
 import { useIdeasToSequence } from "@/lib/hooks/use-ideas-to-sequence"
-import { Loader2, ArrowRight, AlertTriangle, AlertCircle, FileText, Code, Download, Image as ImageIcon } from "lucide-react"
+import { Loader2, ArrowRight, AlertTriangle, AlertCircle, FileText, Code, Download, Image as ImageIcon, FileCode } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { JsonDiagramHistory } from "@/components/json-diagram-history"
@@ -69,20 +69,71 @@ export default function Home() {
     generateSequence()
   }
 
-  // Download functions
-  const handleDownloadSVG = () => {
-    const svgElement = document.querySelector('.json-flowchart svg, .sequence-diagram svg')
-    if (svgElement) {
-      const svgData = new XMLSerializer().serializeToString(svgElement)
-      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" })
-      const svgUrl = URL.createObjectURL(svgBlob)
+  const handleDownloadMermaid = () => {
+    if (flowchartData) {
+      // Convert flowchart data to Mermaid format
+      const mermaidContent = generateMermaidDiagram(flowchartData, activeInputTab)
+      const mermaidBlob = new Blob([mermaidContent], { type: "text/plain;charset=utf-8" })
+      const mermaidUrl = URL.createObjectURL(mermaidBlob)
       const downloadLink = document.createElement("a")
-      downloadLink.href = svgUrl
-      downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.svg`
+      downloadLink.href = mermaidUrl
+      downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.md`
       document.body.appendChild(downloadLink)
       downloadLink.click()
       document.body.removeChild(downloadLink)
-      URL.revokeObjectURL(svgUrl)
+      URL.revokeObjectURL(mermaidUrl)
+    }
+  }
+
+  // Generate Mermaid diagram format
+  const generateMermaidDiagram = (data: any, diagramType: string) => {
+    if (diagramType === "code") {
+      // Flowchart Mermaid format
+      let mermaidContent = "```mermaid\nflowchart TD\n"
+      
+      // Add nodes with proper Mermaid syntax
+      data.nodes.forEach((node: any) => {
+        const label = node.data.label.replace(/"/g, '&quot;')
+        if (node.type === 'start' || node.type === 'end') {
+          mermaidContent += `    ${node.id}([${label}])\n`
+        } else if (node.type === 'decision') {
+          mermaidContent += `    ${node.id}{${label}}\n`
+        } else if (node.type === 'process') {
+          mermaidContent += `    ${node.id}[${label}]\n`
+        } else {
+          mermaidContent += `    ${node.id}[${label}]\n`
+        }
+      })
+      
+      mermaidContent += "\n"
+      
+      // Add edges
+      data.edges.forEach((edge: any) => {
+        const label = edge.label ? `|${edge.label}|` : ""
+        mermaidContent += `    ${edge.source} -->${label} ${edge.target}\n`
+      })
+      
+      mermaidContent += "```"
+      return mermaidContent
+    } else {
+      // Sequence diagram Mermaid format
+      let mermaidContent = "```mermaid\nsequenceDiagram\n"
+      
+      // Add participants
+      data.nodes.forEach((node: any) => {
+        mermaidContent += `    participant ${node.id} as ${node.data.label}\n`
+      })
+      
+      mermaidContent += "\n"
+      
+      // Add messages
+      data.edges.forEach((edge: any) => {
+        const label = edge.label || "message"
+        mermaidContent += `    ${edge.source}->>${edge.target}: ${label}\n`
+      })
+      
+      mermaidContent += "```"
+      return mermaidContent
     }
   }
 
@@ -371,11 +422,11 @@ export default function Home() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={handleDownloadSVG}
+                      onClick={handleDownloadMermaid}
                       className="flex items-center gap-1"
                     >
-                      <Download className="h-4 w-4" />
-                      SVG
+                      <FileCode className="h-4 w-4" />
+                      Mermaid
                     </Button>
                     <Button
                       variant="outline"
