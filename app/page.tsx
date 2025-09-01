@@ -77,7 +77,7 @@ export default function Home() {
       const mermaidUrl = URL.createObjectURL(mermaidBlob)
       const downloadLink = document.createElement("a")
       downloadLink.href = mermaidUrl
-      downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.md`
+      downloadLink.download = `${activeInputTab === "code" ? "flowchart" : "sequence-diagram"}.mermaid`
       document.body.appendChild(downloadLink)
       downloadLink.click()
       document.body.removeChild(downloadLink)
@@ -102,8 +102,8 @@ export default function Home() {
     }
 
     if (diagramType === "code") {
-      // Flowchart Mermaid format
-      let mermaidContent = "```mermaid\nflowchart TD\n"
+      // Flowchart Mermaid format (pure mermaid syntax without markdown wrapper)
+      let mermaidContent = "flowchart TD\n"
       
       // Add nodes with proper Mermaid syntax and quotes
       data.nodes.forEach((node: any) => {
@@ -131,11 +131,10 @@ export default function Home() {
         }
       })
       
-      mermaidContent += "```"
       return mermaidContent
     } else {
-      // Sequence diagram Mermaid format
-      let mermaidContent = "```mermaid\nsequenceDiagram\n"
+      // Sequence diagram Mermaid format (pure mermaid syntax without markdown wrapper)
+      let mermaidContent = "sequenceDiagram\n"
       
       // Add participants with clean names
       data.nodes.forEach((node: any) => {
@@ -151,7 +150,6 @@ export default function Home() {
         mermaidContent += `    ${edge.source}->>${edge.target}: ${cleanLabel}\n`
       })
       
-      mermaidContent += "```"
       return mermaidContent
     }
   }
