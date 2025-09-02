@@ -14,7 +14,8 @@ import { useIdeasToSequence } from "@/lib/hooks/use-ideas-to-sequence"
 import { Loader2, ArrowRight, AlertTriangle, AlertCircle, FileText, Code, Download, Image as ImageIcon, FileCode } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { JsonDiagramHistory } from "@/components/json-diagram-history"
+import { CodeDiagramHistory } from "@/components/code-diagram-history"
+import { SequenceDiagramHistory } from "@/components/sequence-diagram-history"
 import { Badge } from "@/components/ui/badge"
 
 export default function Home() {
@@ -264,7 +265,7 @@ export default function Home() {
           variant="outline"
           className="mt-2 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
         >
-          Powered by Google Gemini
+          Powered by LLM model
         </Badge>
       </div>
 
@@ -484,20 +485,20 @@ export default function Home() {
               size="sm"
               onClick={() => setActiveTab("code")}
             >
-              Code History
+              Code Flowchart History
             </Button>
             <Button 
               variant={activeTab === "ideas" ? "default" : "outline"}
               size="sm"
               onClick={() => setActiveTab("ideas")}
             >
-              Ideas History
+              Sequence Diagram History
             </Button>
           </div>
         </div>
         
         {activeTab === "code" ? (
-          <JsonDiagramHistory
+          <CodeDiagramHistory
             history={codeHistory}
             onClearHistory={clearCodeHistory}
             onRemoveItem={removeCodeFromHistory}
@@ -507,7 +508,7 @@ export default function Home() {
             }}
           />
         ) : (
-          <JsonDiagramHistory
+          <SequenceDiagramHistory
             history={ideasHistory}
             onClearHistory={clearIdeasHistory}
             onRemoveItem={removeIdeasFromHistory}

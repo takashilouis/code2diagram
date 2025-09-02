@@ -10,7 +10,7 @@ import { useJsonFlowchart } from "@/lib/hooks/use-json-flowchart"
 import { Loader2, ArrowRight, AlertTriangle, AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { JsonDiagramHistory } from "@/components/json-diagram-history"
+import { CodeDiagramHistory } from "@/components/code-diagram-history"
 import { Badge } from "@/components/ui/badge"
 
 export default function JsonFlowchartPage() {
@@ -133,7 +133,7 @@ export default function JsonFlowchartPage() {
 
       {/* Diagram History Section (Below) */}
       <div className="w-full">
-        <JsonDiagramHistory
+        <CodeDiagramHistory
           history={diagramHistory}
           onClearHistory={clearHistory}
           onRemoveItem={removeFromHistory}
