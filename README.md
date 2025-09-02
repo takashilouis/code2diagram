@@ -67,10 +67,6 @@ Download your diagrams in various formats for different use cases:
   - Compatible with GitHub, GitLab, and documentation platforms
   - Pure mermaid syntax without markdown wrappers
   - Ready for version control
-- **XML**: Draw.io compatible format for further editing
-  - Open directly in diagrams.net
-  - Editable and customizable
-  - Professional diagramming workflows
 
 ## Technology Stack
 
@@ -128,7 +124,7 @@ Download your diagrams in various formats for different use cases:
 1. **Select the "Code" tab** in the input section
 2. **Paste your code** or start typing in the editor
 3. **Click "Generate Flowchart"** to create the diagram
-4. **Download** in your preferred format (PNG, Mermaid, XML)
+4. **Download** in your preferred format (PNG, Mermaid)
 
 ### Creating a Sequence Diagram
 
