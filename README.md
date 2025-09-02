@@ -2,6 +2,7 @@
 
 Transform your ideas and code into beautiful diagrams using LLM model
 
+Visit: [Code2Diagram](https://code2diagram.vercel.app)
 ![Homepage](images/homepage.png)
 
 ## Overview
