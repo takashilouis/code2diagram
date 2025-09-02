@@ -1,12 +1,12 @@
-# CodeXFlow
+# Code2Diagram
 
-Transform your ideas and code into beautiful diagrams using AI
+Transform your ideas and code into beautiful diagrams using LLM model
 
-![Homepage](homepage.png)
+![Homepage](images/homepage.png)
 
 ## Overview
 
-CodeXFlow is a powerful web application that leverages AI to automatically generate professional diagrams from your code and ideas. Whether you're documenting software architecture, explaining algorithms, or visualizing system flows, CodeXFlow makes it effortless to create clear, beautiful diagrams.
+Code2Diagram is a powerful web application that leverages AI to automatically generate professional diagrams from your code and ideas. Whether you're documenting software architecture, explaining algorithms, or visualizing system flows, Code2Diagram makes it effortless to create clear, beautiful diagrams.
 
 ## Features
 
@@ -15,7 +15,7 @@ CodeXFlow is a powerful web application that leverages AI to automatically gener
 #### Code to Flowchart
 Transform any code into a visual flowchart that shows the execution flow, decision points, and logic structure.
 
-![Code to Diagram](code2diagram.png)
+![Code to Diagram](images/code2diagram.png)
 
 **Supported Languages:**
 - JavaScript/TypeScript
@@ -33,7 +33,7 @@ Transform any code into a visual flowchart that shows the execution flow, decisi
 #### Ideas to Sequence Diagram
 Convert your natural language descriptions into detailed sequence diagrams that illustrate interactions between different components.
 
-![Ideas to Diagram](ideas2diagram.png)
+![Ideas to Diagram](images/ideas2diagram.png)
 
 ### 📊 **Smart Diagram Generation**
 
@@ -46,7 +46,7 @@ Convert your natural language descriptions into detailed sequence diagrams that 
 
 Keep track of all your generated diagrams with separate, organized history sections.
 
-![Diagram History](diagram-history.png)
+![Diagram History](images/diagram-history.png)
 
 **History Features:**
 - **Separate Histories**: Code flowcharts and sequence diagrams are tracked independently
@@ -94,8 +94,8 @@ Download your diagrams in various formats for different use cases:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/codexflow.git
-   cd codexflow
+   git clone https://github.com/your-username/Code2Diagram.git
+   cd Code2Diagram
    ```
 
 2. **Install dependencies**
@@ -175,7 +175,7 @@ We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING
 ### Project Structure
 
 ```
-codexflow/
+Code2Diagram/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   ├── settings/          # Settings page
@@ -212,9 +212,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Documentation**: Check our [Wiki](https://github.com/your-username/codexflow/wiki)
-- **Issues**: Report bugs on [GitHub Issues](https://github.com/your-username/codexflow/issues)
-- **Discussions**: Join our [GitHub Discussions](https://github.com/your-username/codexflow/discussions)
+- **Documentation**: Check our [Wiki](https://github.com/your-username/Code2Diagram/wiki)
+- **Issues**: Report bugs on [GitHub Issues](https://github.com/your-username/Code2Diagram/issues)
+- **Discussions**: Join our [GitHub Discussions](https://github.com/your-username/Code2Diagram/discussions)
 
 ## Roadmap
 
@@ -227,6 +227,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by the CodeXFlow Team**
+**Built with ❤️ by the Code2Diagram Team**
 
 *Transform your code and ideas into beautiful diagrams with the power of AI*

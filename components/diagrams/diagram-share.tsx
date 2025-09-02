@@ -32,7 +32,7 @@ export function DiagramShare({ diagram, diagramType }: DiagramShareProps) {
       // In a real app, this would create a shareable link by saving the diagram to a database
       // For now, we'll just simulate it with a fake URL
       const fakeId = Math.random().toString(36).substring(2, 10)
-      setShareUrl(`https://codexflow.vercel.app/share/${fakeId}`)
+      setShareUrl(`https://code2diagram.vercel.app/share/${fakeId}`)
     }
     setOpen(open)
   }

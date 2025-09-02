@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="font-bold text-lg mb-2">CodeXFlow</h3>
+            <h3 className="font-bold text-lg mb-2">Code2Diagram</h3>
             <p className="text-muted-foreground text-sm mb-4 max-w-md">
               Transform your ideas and code into beautiful, interactive diagrams using the power of Google Gemini AI. 
               Create flowcharts, sequence diagrams, and visualize your logic effortlessly.
@@ -57,7 +57,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Copyright */}
             <div className="text-sm text-muted-foreground">
-              © {currentYear} CodeXFlow. All rights reserved.
+              © {currentYear} Code2Diagram. All rights reserved.
             </div>
 
             {/* Social links */}

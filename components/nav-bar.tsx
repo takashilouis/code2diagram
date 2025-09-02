@@ -15,7 +15,7 @@ export function NavBar() {
         <div className="mr-4 flex items-center">
           <GitBranch className="h-6 w-6 mr-2" />
           <Link href="/" className="text-xl font-bold">
-            CodeXFlow
+            Code2Diagram
           </Link>
         </div>
         <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">

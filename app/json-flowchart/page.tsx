@@ -39,7 +39,7 @@ export default function JsonFlowchartPage() {
   return (
     <main className="container mx-auto py-6 px-4 min-h-screen">
       <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-4xl font-bold tracking-tight mb-2">CodeXFlow - JSON Flowchart</h1>
+        <h1 className="text-4xl font-bold tracking-tight mb-2">Code2Diagram - JSON Flowchart</h1>
         <p className="text-lg text-muted-foreground text-center max-w-2xl">
           Transform your code into beautiful, D3.js-powered flowcharts using AI
         </p>

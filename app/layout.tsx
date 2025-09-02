@@ -9,7 +9,7 @@ import { Toaster } from "@/components/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "CodeXFlow - Code to Flowchart Converter",
+  title: "Code2Diagram- Code to Flowchart Converter",
   description: "Transform your code into beautiful, understandable flowcharts using Google Gemini AI",
     generator: 'v0.dev'
 }
