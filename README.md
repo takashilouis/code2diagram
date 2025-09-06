@@ -5,6 +5,9 @@ Transform your ideas and code into beautiful diagrams using LLM model
 Visit: [Code2Diagram](https://code2diagram.vercel.app)
 ![Homepage](images/homepage.png)
 
+First achievement: nearly 160 API usages after the app was introduced to BuildInPublicVN facebook group!
+![First achievement](images/api-usage.png)
+
 ## Overview
 
 Code2Diagram is a powerful web application that leverages AI to automatically generate professional diagrams from your code and ideas. Whether you're documenting software architecture, explaining algorithms, or visualizing system flows, Code2Diagram makes it effortless to create clear, beautiful diagrams.
