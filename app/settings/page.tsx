@@ -12,7 +12,7 @@ import { Slider } from "@/components/ui/slider"
 import { Trash2, Save, RotateCcw } from "lucide-react"
 
 export default function SettingsPage() {
-  const [aiModel, setAiModel] = useState("gemini-1.5-pro")
+  const [aiModel, setAiModel] = useState("gemini-2.0-flash-exp")
   const [defaultDiagramType, setDefaultDiagramType] = useState("flowchart")
   const [defaultTheme, setDefaultTheme] = useState("default")
   const [maxHistoryItems, setMaxHistoryItems] = useState(20)
@@ -55,7 +55,8 @@ export default function SettingsPage() {
                   <SelectValue placeholder="Select AI model" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
+                  <SelectItem value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Recommended)</SelectItem>
+                  <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro (Legacy)</SelectItem>
                   <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
                   <SelectItem value="gemini-1.0-pro">Gemini 1.0 Pro</SelectItem>
                 </SelectContent>

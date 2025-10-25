@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     // Validate the API key by making a test request to Gemini
     try {
       const genAI = new GoogleGenerativeAI(apiKey)
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" })
 
       // Make a simple test request
       await model.generateContent("Hello, this is a test request to validate the API key.")

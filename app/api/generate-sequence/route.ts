@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
       // Initialize the Gemini API
       const genAI = new GoogleGenerativeAI(apiKey)
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" })
 
       const prompt = `
 You are an expert in sequence diagram creation. Given the following ideas or requirements, create a sequence diagram representation using a structured JSON format.
